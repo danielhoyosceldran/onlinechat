@@ -1,6 +1,6 @@
 # chat server files to ignore
-.\chatserver\.vs
-.\chatserver\chatserver.sln
-.\chatserver\chatserver\bin
-.\chatserver\chatserver\obj
-.\chatserver\chatserver\chatserver.csproj
+chatserver\.vs
+chatserver\chatserver.sln
+chatserver\chatserver\bin
+chatserver\chatserver\obj
+chatserver\chatserver\chatserver.csproj
