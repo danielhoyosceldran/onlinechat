@@ -1,3 +1,6 @@
+# general
+documents
+
 # chat server files to ignore
 chatserver/.vs
 chatserver/chatserver.sln

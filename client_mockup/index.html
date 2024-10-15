@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="css.css">
+</head>
+
+<body>
+    <div id="messageContainer"></div>
+    <form action="" onsubmit="act(event)" class="sendBox">
+        <input type="text" id="fmessage" name="fname" class="textInput" autocomplete="off"
+            placeholder="Write something and press return" autofocus="on" spellcheck="false"
+            oninput="updateCounter()">
+    </form>
+    <p id="counter">0</p>
+</body>
+
+</html>
