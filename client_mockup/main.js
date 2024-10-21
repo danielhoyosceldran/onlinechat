@@ -1,8 +1,13 @@
-const socket = new WebSocket("ws://localhost:5000");
+const socket = new WebSocket("ws://192.168.1.7:5000");
+//const socket = new WebSocket("https://257d-37-116-8-119.ngrok-free.app ");
 var pile = [];
 
 socket.onopen = function(event) {
   console.log("Connexió oberta");
+  var onlineBanner = document.getElementById("onlineBanner");
+  onlineBanner.innerText = "online";
+  onlineBanner.classList.remove("offline");
+  onlineBanner.classList.add("online");
 };
 
 socket.onmessage = function(event) {
@@ -16,7 +21,7 @@ socket.onmessage = function(event) {
   setTimeout(() => {
     pile.shift();
     updateMessageContainer();
-  }, 3000);
+  }, 10000);
 };
 
 function updateMessageContainer() {
@@ -29,6 +34,9 @@ function updateMessageContainer() {
 
 socket.onclose = function(event) {
   console.log("Connexió tancada");
+  onlineBanner.innerText = "Reload page to go online";
+  onlineBanner.classList.remove("online");
+  onlineBanner.classList.add("offline");
 };
 
 function act(event) {

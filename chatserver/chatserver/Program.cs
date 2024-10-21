@@ -11,7 +11,8 @@ namespace chatserver
     class Program
     {
         // Especifica l'adreça IP i el port on el servidor WebSocket escoltarà
-        private static readonly string serverAddress = "http://localhost:5000/";
+        private static readonly string serverAddress = "http://*:5000/";
+        private static Dictionary<string, WebSocket> webSockets = new Dictionary<string, WebSocket>();
 
         static async Task Main(string[] args)
         {
@@ -22,6 +23,7 @@ namespace chatserver
             Console.WriteLine("Servidor WebSocket en execució a: " + serverAddress);
 
             // Bucle infinit per acceptar connexions
+            // Es queda aquí fins que algun client es conecta.
             while (true)
             {
                 // Acceptar sol·licitud de connexió
@@ -31,7 +33,7 @@ namespace chatserver
                 if (context.Request.IsWebSocketRequest)
                 {
                     // Gestionar connexió WebSocket
-                    await HandleWebSocketConnectionAsync(context);
+                    HandleWebSocketConnectionAsync(context);
                 }
                 else
                 {
@@ -62,6 +64,7 @@ namespace chatserver
 
             // Obtenir el WebSocket actiu
             WebSocket webSocket = wsContext.WebSocket;
+            webSockets.Add(webSockets.Count.ToString(), webSocket);
 
             // Bucle per rebre missatges del client
             byte[] buffer = new byte[1024];
@@ -78,19 +81,21 @@ namespace chatserver
                         Console.WriteLine("El client ha tancat la connexió.");
                         await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Connexió tancada pel client", CancellationToken.None);
                     }
-                    // Si es rep un missatge de text
+                    // If the message is text...
                     else if (result.MessageType == WebSocketMessageType.Text)
                     {
-                        // Llegir i convertir el missatge rebut
+                        // Read the recieved message
                         string clientMessage = Encoding.UTF8.GetString(buffer, 0, result.Count);
                         Console.WriteLine("Missatge rebut del client: " + clientMessage);
 
-                        // Enviar resposta al client
-                        string responseMessage = clientMessage;
-                        byte[] responseBytes = Encoding.UTF8.GetBytes(responseMessage);
-                        await webSocket.SendAsync(new ArraySegment<byte>(responseBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+                        // Send reply
+                        foreach (KeyValuePair<string, WebSocket> ws in webSockets)
+                        {
+                            sendMessage(ws.Value, clientMessage, ws.Key);
+                        }
+                        
 
-                        // Netejar el buffer per preparar-lo per al següent missatge
+                        // Clean the buffer to recieve more messages
                         Array.Clear(buffer, 0, buffer.Length);
                     }
                 }
@@ -101,13 +106,21 @@ namespace chatserver
                 }
             }
 
-            // Tancar el WebSocket si es surt del bucle
+            // Close the socket (if we exit the loop)
             if (webSocket.State != WebSocketState.Closed)
             {
+                
                 await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Connexió finalitzada", CancellationToken.None);
             }
 
             webSocket.Dispose();
+        }
+
+        private static async Task sendMessage(WebSocket webSocket, string clientMessage, string from)
+        {
+            string responseMessage = from + ": " + clientMessage;
+            byte[] responseBytes = Encoding.UTF8.GetBytes(responseMessage);
+            await webSocket.SendAsync(new ArraySegment<byte>(responseBytes), WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
     }

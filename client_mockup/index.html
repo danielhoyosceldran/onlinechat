@@ -10,13 +10,16 @@
 </head>
 
 <body>
+    <span id="onlineBanner">...</span>
+    <div id="inputContainer">
+        <form action="" onsubmit="act(event)" class="sendBox">
+            <input type="text" id="fmessage" name="fname" class="textInput" autocomplete="off"
+                placeholder="Write something and press return" autofocus="on" spellcheck="false"
+                oninput="updateCounter()">
+        </form>
+        <p id="counter">0</p>
+    </div>
     <div id="messageContainer"></div>
-    <form action="" onsubmit="act(event)" class="sendBox">
-        <input type="text" id="fmessage" name="fname" class="textInput" autocomplete="off"
-            placeholder="Write something and press return" autofocus="on" spellcheck="false"
-            oninput="updateCounter()">
-    </form>
-    <p id="counter">0</p>
 </body>
 
 </html>

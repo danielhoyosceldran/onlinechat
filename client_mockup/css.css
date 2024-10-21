@@ -1,16 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-* {
-    margin: 0;
+*,
+*::after,
+*::before {
     padding: 0;
+    margin: 0;
+
+    box-sizing: border-box;
 }
 
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    flex-direction: column;
 
     height: 100vh;
     width: 100vw;
@@ -22,10 +24,23 @@ body {
     font-family: "Inter";
 }
 
+#inputContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 70vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #counter {
-    color: #202020;
+    color: #303030;
     margin-top: 35px;
-    font-size: 3vw;
+    font-size: 3em;
 }
 
 form {
@@ -44,12 +59,12 @@ input {
     &[type=text] {
         border: 0;
         border-radius: 6px;
-        font-size: 5vw;
+        font-size: 2em;
         width: 80%;
         background-color: transparent;
         text-align: center;
         &::placeholder {
-            color: #202020;
+            color: #303030;
         }
     }
 }
@@ -69,9 +84,55 @@ button {
     color: #505050;
     font-size: 1em;
 
-    text-align: end;
+    display: flex;
+    flex-direction: column-reverse;
+    text-align: start;
 }
 
-@media screen and (max-width: 720px) {
-    
+.message {
+    background-color: #191919;
+    min-width: 200px;
+    min-height: 30px;
+    max-width: 350px;
+    max-height: 600px;
+
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin: 15px;
+
+    border: 0 solid;
+    border-radius: 12px 5px 12px 12px;
+
+    position: relative;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 20px;
+        height: 20px;
+        background-image: url('tail.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: -2px;
+        right: -10px;
+    }
+}
+
+@media screen and (min-width: 1300px) {
+}
+
+#onlineBanner {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.online {
+    color: #62AC5F;
+}
+
+.offline {
+    color: #AB5E5E  ;
 }
