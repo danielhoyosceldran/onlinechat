@@ -1,0 +1,12 @@
+@import "global.css";
+
+.defaultHeader {
+    color: white;
+
+    & ul li {
+        padding: 10px;
+    }
+}
+
+.signup_button {
+}

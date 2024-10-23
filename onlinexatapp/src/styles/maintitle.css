@@ -1,0 +1,11 @@
+.maintitle_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & h1 {
+        font-size: 160px;
+        padding-bottom: 20px;
+        padding-left: 30px;
+    }
+}
