@@ -108,6 +108,8 @@ button {
 
     position: relative;
 
+    color: #ccc;
+
     &::after {
         content: '';
         display: block;

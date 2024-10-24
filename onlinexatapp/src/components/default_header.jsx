@@ -1,7 +1,6 @@
-import React from 'react'
 import "../styles/defaultheader.css"
 
-export default function Defaultheather() {
+export function Defaultheather() {
   return (
     <div className='defaultHeader'>
       

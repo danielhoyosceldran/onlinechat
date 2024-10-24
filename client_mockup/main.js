@@ -1,4 +1,4 @@
-const socket = new WebSocket("ws://192.168.1.7:5000");
+const socket = new WebSocket("ws://localhost:5000");
 //const socket = new WebSocket("https://257d-37-116-8-119.ngrok-free.app ");
 var pile = [];
 
